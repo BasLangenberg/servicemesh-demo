@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+      annotations:
+        "consul.hashicorp.com/connect-inject": "true"
+        "consul.hashicorp.com/connect-service": "app"
+    spec:
+      containers:
+        - name: app
+          image: nicholasjackson/fake-service:v0.7.8
+          ports:
+            - containerPort: 9090
+          env:
+          - name: MESSAGE
+            value: "app"
+          - name : NAME
+            value: "App"
+          - name: UPSTREAM_URIS
+            value: "http://134.122.51.126:9090"
+          - name: LISTEN_ADDR
+            value: "127.0.0.1:9090"
+      serviceAccountName: app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+      annotations:
+        "consul.hashicorp.com/connect-inject": "true"
+        "consul.hashicorp.com/connect-service": "web"
+        "consul.hashicorp.com/connect-service-upstreams": "app:8080"
+    spec:
+      containers:
+        - name: web
+          image: nicholasjackson/fake-service:v0.7.8
+          ports:
+            - containerPort: 9090
+          env:
+          - name : NAME
+            value: "Web"
+          - name: UPSTREAM_URIS
+            value: "http://localhost:8080"
+          - name: MESSAGE
+            value: "web"
+          - name: LISTEN_ADDR
+            value: "127.0.0.1:9090"
+      serviceAccountName: web

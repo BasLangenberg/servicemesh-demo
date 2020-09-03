@@ -1,0 +1,30 @@
+# config.yaml
+global:
+  name: consul
+  datacenter: ams3
+  tls:
+    enabled: true
+#    caCert:
+#      secretName: consul-federation
+#      secretKey: caCert
+#    caKey:
+#      secretName: consul-federation
+#      secretKey: caKey
+  acls:
+    manageSystemACLs: true
+#    replicationToken:
+#      secretName: consul-federation
+#      secretKey: replicationToken
+    replication:
+      enabled: true
+  federation:
+    enabled: true
+    createFederationSecret: true
+connectInject:
+  enabled: true
+meshGateway:
+  enabled: true
+  replicas: 1
+server:
+  replicas: 1
+  bootstrapExpect: 1
