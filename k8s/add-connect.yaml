@@ -1,4 +1,9 @@
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+    name: app
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,6 +36,11 @@ spec:
             value: "http://134.122.51.126:9090"
       serviceAccountName: app
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+    name: web
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -62,3 +72,15 @@ spec:
           - name: MESSAGE
             value: "web"
       serviceAccountName: web
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9090

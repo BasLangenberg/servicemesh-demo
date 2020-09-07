@@ -15,6 +15,7 @@ global:
 #    replicationToken:
 #      secretName: consul-federation
 #      secretKey: replicationToken
+    createReplicationToken: true
     replication:
       enabled: true
   federation:
