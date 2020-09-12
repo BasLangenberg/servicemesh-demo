@@ -116,28 +116,9 @@ Use the consul console to add an acl for web -> app
 
 ## do same thing for DB
 
-```shell
-# Install Consul
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-sudo apt-get update && sudo apt-get install consul
-```
+Start consul services
 
-Config file
-
-```shell
-server = false,
-datacenter = "ams3",
-data_dir = "/tmp/consul",
-encrypt = "Mjc5MjhlNzEtYTZiMS00MjhkLWI3MzctN2MzNzg0OGI0Y2I2",
-log_level = "INFO",
-enable_syslog = true,
-leave_on_terminate = true,
-bind_addr = "134.209.81.128",
-start_join = [
-    "206.189.241.182"
-]
-```
+Reconfigure app service
 
 # rate service in FRA1
 

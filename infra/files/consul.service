@@ -1,0 +1,7 @@
+[Unit]
+Description="Consul"
+
+[Service]
+KillSignal=INT
+ExecStart=/usr/bin/consul agent -retry-join 'provider=k8s label_selector="app=consul,component=server" kubeconfig=/root/.kube/config' -data-dir=/etc/consul.d/data -config-dir=/etc/consul.d
+Restart=always

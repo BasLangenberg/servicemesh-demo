@@ -1,0 +1,8 @@
+
+[Unit]
+Description="DB Proxy"
+
+[Service]
+KillSignal=INT
+ExecStart=/usr/bin/consul connect -log-level=DEBUG -service db -http-addr localhost:8500 -listen :8443 -service-addr localhost:9090 -register
+Restart=always
