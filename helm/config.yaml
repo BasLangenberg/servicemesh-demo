@@ -29,3 +29,7 @@ meshGateway:
 server:
   replicas: 1
   bootstrapExpect: 1
+client:
+  exposeGossipPorts: true
+  enabled: true
+  grpc: true

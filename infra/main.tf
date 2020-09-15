@@ -1,5 +1,12 @@
 provider "digitalocean" {}
 
+# Create VPC
+resource "digitalocean_vpc" "smdemo" {
+  name     = "sm-demo-vpc"
+  region   = "ams3"
+  ip_range = "10.1.10.0/24"
+}
+
 # Create DB Server (Not really a DB server)
 resource "digitalocean_droplet" "dbserver" {
   image    = "docker-20-04"
@@ -8,6 +15,7 @@ resource "digitalocean_droplet" "dbserver" {
   # This is the ansible key
   ssh_keys = ["2a:43:56:bf:f4:70:b4:11:ef:e9:6f:79:2b:cf:2c:22"]
   size     = "s-1vcpu-1gb"
+  vpc_uuid = digitalocean_vpc.smdemo.id
 }
 
 # Create AMS3 k8s cluster
@@ -22,6 +30,7 @@ resource "digitalocean_kubernetes_cluster" "ams_cluster" {
     size       = "s-1vcpu-2gb"
     node_count = 3
   }
+  vpc_uuid = digitalocean_vpc.smdemo.id
 }
 
 # Save Kubeconfig
