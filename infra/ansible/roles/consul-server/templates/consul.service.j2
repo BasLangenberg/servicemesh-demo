@@ -1,0 +1,12 @@
+[Unit]
+Description=solo consul server example
+
+[Service]
+WorkingDirectory={{ consul_config_dir }}
+User=root
+ExecStart={{ consul_install_dir }}/consul agent -config-dir={{ consul_config_dir }} -bind={{ ansible_eth0.ipv4.address }}
+Restart=Always
+StartLimitIntervalSec=0
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+{
+    "node_name": "consul-server",
+    "datacenter": "ams3",
+    "server": true,
+    "connect": {
+        "enabled": true
+    },
+    "data_dir": "{{ consul_data_dir }}",
+    "bootstrap": true,
+    "bootstrap_expect": 1
+}
